@@ -63,6 +63,7 @@ public class CustomSecurityConfiguration {
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
+		// below password details can be passed externally as well, so it cab be hided in the source code
 		UserDetails user = User.builder().username("user").password("{noop}password").roles("USER").build();
 		UserDetails admin = User.builder().username("admin").password("{noop}password").roles("USER", "ADMIN").build();
 		return new InMemoryUserDetailsManager(user, admin);
