@@ -29,31 +29,30 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class CustomSecurityConfiguration {
-	
-	
-	/**
-	 * /api/admin --> should have ROLE ADMIN
-	 * /api/user  -> should have ROLE USER
-	 * /api/ -> no auth
-	 * /api/ad -> authenticated
-	 * 
-	 */
-	@SuppressWarnings("deprecation")
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
+
+    /**
+     * /api/admin --> should have ROLE ADMIN
+     * /api/user  -> should have ROLE USER
+     * /api/ -> no auth
+     * /api/ad -> authenticated
+     * 
+     */
+    @Bean
+    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 		//.securityMatcher("/api/**")
-				.authorizeHttpRequests(requests -> requests.requestMatchers("/api/admin").hasRole("ADMIN"))
-				.authorizeHttpRequests(requests -> requests.requestMatchers("/api/user").hasRole("USER"))
-				.authorizeHttpRequests(
-						requests -> requests.requestMatchers("login", "/api/").permitAll().anyRequest().authenticated())
-				.formLogin(withDefaults());
+			.authorizeHttpRequests(requests -> requests.requestMatchers("/api/admin").hasRole("ADMIN"))
+			.authorizeHttpRequests(requests -> requests.requestMatchers("/api/user").hasRole("USER"))
+			.authorizeHttpRequests(
+				 requests -> requests.requestMatchers("login", "/api/").permitAll().anyRequest().authenticated())
+			.formLogin(withDefaults());
 
 		return http.build(); 	
 	}
-	
+
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
+    DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(userDetailsService());
@@ -62,8 +61,8 @@ public class CustomSecurityConfiguration {
     }
 	
 	@Bean
-	public UserDetailsService userDetailsService() {
-		// below password details can be passed externally as well, so it cab be hided in the source code
+    UserDetailsService userDetailsService() {
+		// below password details can be passed from externally as well, so clear text credentials can be hided in the source code
 		UserDetails user = User.builder().username("user").password("{noop}password").roles("USER").build();
 		UserDetails admin = User.builder().username("admin").password("{noop}password").roles("USER", "ADMIN").build();
 		return new InMemoryUserDetailsManager(user, admin);
@@ -72,7 +71,7 @@ public class CustomSecurityConfiguration {
 
 	@SuppressWarnings("deprecation")
 	@Bean
-	public PasswordEncoder passwordEncoder() {
+	PasswordEncoder passwordEncoder() {
 		Map<String, PasswordEncoder> encoders = new HashMap<>();
 		// encoders.put("bcrypt", new BCryptPasswordEncoder());
 		encoders.put("noop", NoOpPasswordEncoder.getInstance()); // only for testing purpose
