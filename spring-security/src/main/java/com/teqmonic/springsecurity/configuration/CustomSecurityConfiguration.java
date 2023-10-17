@@ -31,6 +31,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class CustomSecurityConfiguration {
 	
 	
+	/**
+	 * /api/admin --> should have ROLE ADMIN
+	 * /api/user  -> should have ROLE USER
+	 * /api/ -> no auth
+	 * /api/ad -> authenticated
+	 * 
+	 */
 	@SuppressWarnings("deprecation")
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -45,7 +52,7 @@ public class CustomSecurityConfiguration {
 		return http.build(); 	
 	}
 	
-    //@Bean
+    @Bean
     public DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setPasswordEncoder(passwordEncoder());
