@@ -63,10 +63,8 @@ public class CustomSecurityConfiguration {
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
-		UserDetails user = User.builder().username("user").password("{noop}password").roles("USER")
-				.build();
-		UserDetails admin = User.builder().username("admin").password("{noop}password")
-				.roles("USER", "ADMIN").build();
+		UserDetails user = User.builder().username("user").password("{noop}password").roles("USER").build();
+		UserDetails admin = User.builder().username("admin").password("{noop}password").roles("USER", "ADMIN").build();
 		return new InMemoryUserDetailsManager(user, admin);
 	}
 	
