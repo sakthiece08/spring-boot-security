@@ -13,8 +13,7 @@ In the previous versions of Spring, we used to extend **WebSecurityConfigureAdap
 - configure(AuthenticationManagerBuilder)
 - configure(HttpSecurity)
   
-In Spring-security 6.*
-We extend the class **InMemoryUserDetailsManager** implements UserDetailsManager, UserDetailsPasswordService
+In Spring-security 6, we extend the class **InMemoryUserDetailsManager** implements UserDetailsManager, UserDetailsPasswordService
 
 **SecurityFilterChain** and **InMemoryUserDetailsManager** beans to be configured as shown below:
 
