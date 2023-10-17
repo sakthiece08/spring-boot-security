@@ -11,5 +11,6 @@ Class **InMemoryUserDetailsManager** implements UserDetailsManager, UserDetailsP
 
 ## JDBC
 Class **JdbcUserDetailsManager** extends JdbcDaoImpl implements UserDetailsManager, GroupManager 
+
 Default schema path:
- "org/springframework/security/core/userdetails/jdbc/users.ddl";
+ "org/springframework/security/core/userdetails/jdbc/**users.ddl**";
