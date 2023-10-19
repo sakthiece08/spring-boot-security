@@ -25,9 +25,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableMethodSecurity
 public class CustomSecurityConfiguration {
 	
-	
 	@Bean
 	DataSource dataSource() {
+		// since datasource is being configured, no need to have H2 specific properties in properties file
 		return new EmbeddedDatabaseBuilder()
 				.setType(EmbeddedDatabaseType.H2)
 				.setName("dashboard")
@@ -43,6 +43,12 @@ public class CustomSecurityConfiguration {
 		JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager(dataSource);
 		jdbcUserDetailsManager.createUser(admin);
 		jdbcUserDetailsManager.createUser(user);
+		/**
+		 * Use below methods to set retrieve queries in case default DDL schema is not used 
+		 * 
+		 * jdbcUserDetailsManager.setUsersByUsernameQuery("");
+		 * jdbcUserDetailsManager.setAuthoritiesByUsernameQuery("");
+		 **/
 		return jdbcUserDetailsManager;
 	}
 	
